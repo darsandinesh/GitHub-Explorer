@@ -1,18 +1,5 @@
 import mongoose, { Schema, Document } from "mongoose";
-
-interface IUser extends Document {
-    username: string;
-    name: string;
-    followers: number;
-    following: number;
-    public_repos: number;
-    public_gists: number;
-    location: string;
-    bio: string;
-    blog: string;
-    mutualFriends: string[];
-    isDeleted: boolean;
-}
+import { IUser } from "../interfaces/IUser";
 
 const userSchema: Schema = new Schema({
     username: {
@@ -21,6 +8,9 @@ const userSchema: Schema = new Schema({
         unique: true
     },
     name: {
+        type: String
+    },
+    avatar_url: {
         type: String
     },
     followers: {

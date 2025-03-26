@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import dbConnection from './config/db';
+import userRouter from './routes/userRoutes';
 
 dotenv.config();
 const app = express();
@@ -9,6 +10,8 @@ const app = express();
 dbConnection();
 
 app.use(express.json());
+
+app.use('/', userRouter);
 
 const PORT = process.env.PORT || 8080;
 
