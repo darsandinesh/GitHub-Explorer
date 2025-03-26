@@ -1,5 +1,16 @@
 import mongoose, { Schema, Document } from "mongoose";
 import { IUser } from "../interfaces/IUser";
+import { repo } from "../interfaces/IUser";
+
+
+const repoSchema = new mongoose.Schema({
+    name: { type: String, required: true },
+    description: { type: String, default: null },
+    html_url: { type: String, required: true },
+    stargazers_count: { type: Number, default: 0 },
+    forks_count: { type: Number, default: 0 },
+    language: { type: String, default: null }
+});
 
 const userSchema: Schema = new Schema({
     username: {
@@ -37,6 +48,8 @@ const userSchema: Schema = new Schema({
     mutualFriends: {
         type: [String]
     },
+    Repo: [repoSchema],
+    
     isDeleted: {
         type: Boolean,
         default: false

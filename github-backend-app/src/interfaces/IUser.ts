@@ -27,6 +27,7 @@ export interface saveUserData {
     bio: string;
     blog: string;
     mutualFriends: string[];
+    Repo: repo[]
 }
 
 export interface searchUser {
@@ -39,3 +40,12 @@ export interface updateUserDetails {
     blog?: string;
     bio?: string;
 }
+
+export interface repo {
+    name: string;
+    description: string;
+    html_url: string;
+    stargazers_count: number;
+    forks_count: number;
+    language?: string;
+};

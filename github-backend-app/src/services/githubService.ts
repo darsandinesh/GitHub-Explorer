@@ -1,12 +1,26 @@
 import axios from "axios";
 import dotenv from 'dotenv'
 import userModel from "../models/userModel";
-import { saveUserData } from "../interfaces/IUser";
+import { repo, saveUserData } from "../interfaces/IUser";
 dotenv.config();
 
 export const getGitHubUserData = async (username: string) => {
     const response = await axios.get(`${process.env.GITHUB_URL}/${username}`);
-    console.log(response, 'res for the search')
+    // console.log(response.data[0], '-re')
+    const repoData = await axios.get(response.data.repos_url);
+    console.log(repoData.data[0], '-respoData')
+    let data = [];
+    for (let i = 0; i < repoData.data.length; i++) {
+        let obj = {
+            description: repoData.data[i].description,
+            forks_count: repoData.data[i].forks_count,
+            html_url: repoData.data[i].html_url,
+            name: repoData.data[i].name,
+            stargazers_count: repoData.data[i].stargazers_count,
+            language: repoData.data[i].language
+        }
+        data.push(obj)
+    }
     const friends = await findMutualFriends(username);
 
     const userDetails: saveUserData = {
@@ -20,7 +34,8 @@ export const getGitHubUserData = async (username: string) => {
         location: response.data.location,
         bio: response.data.bio,
         blog: response.data.blog,
-        mutualFriends: friends
+        mutualFriends: friends,
+        Repo: data
     }
 
     return userDetails
@@ -52,6 +67,5 @@ async function fetchFollowers(username: string): Promise<string[]> {
 // Fetch users that the user is following from the GitHub API
 async function fetchFollowing(username: string): Promise<string[]> {
     const followingResponse = await axios.get(`${process.env.GITHUB_URL}/${username}/following`);
-    console.log(followingResponse, '-res')
     return followingResponse.data.map((following: any) => following.login);
 }
