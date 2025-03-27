@@ -7,7 +7,7 @@ import RepositoryDetail from "../components/RepositoryDetail";
 import FollowersList from "../components/FollowersList";
 
 const HomePage: React.FC = () => {
-    const [username, setUsername] = useState<string | null>(null);
+    const [, setUsername] = useState<string | null>(null);
     const [userInfo, setUserInfo] = useState<string>("");
     const [repositories, setRepositories] = useState<repo[]>([]);
     const [followers, setFollowers] = useState<string[]>([]);
